@@ -1,0 +1,60 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+struct Question {
+    string questionText;
+    vector<string> options;
+    int correctAnswerIndex;
+};
+
+void askQuestion(const Question& q, int& score) {
+    cout << q.questionText << endl;
+    for (int i = 0; i < q.options.size(); ++i) {
+        cout << i + 1 << ". " << q.options[i] << endl;
+    }
+
+    int userAnswer;
+    cout << "Your answer (enter the number): ";
+    cin >> userAnswer;
+
+    if (userAnswer - 1 == q.correctAnswerIndex) {
+        cout << "Correct!" << endl;
+        ++score;
+    } else {
+        cout << "Wrong. The correct answer is: " << q.options[q.correctAnswerIndex] << endl;
+    }
+    cout << endl;
+}
+
+int main() {
+    vector<Question> quiz = {
+        {
+            "What is the capital of France?",
+            {"1. Berlin", "2. Madrid", "3. Paris", "4. Rome"},
+            2
+        },
+        {
+            "Which planet is known as the Red Planet?",
+            {"1. Earth", "2. Mars", "3. Jupiter", "4. Venus"},
+            1
+        },
+        {
+            "Who wrote 'Hamlet'?",
+            {"1. Charles Dickens", "2. William Shakespeare", "3. Mark Twain", "4. Jane Austen"},
+            1
+        }
+    };
+
+    int score = 0;
+
+    cout << "Welcome to the Quiz Game!" << endl;
+    for (const auto& q : quiz) {
+        askQuestion(q, score);
+    }
+
+    cout << "Quiz Over! Your final score is: " << score << " out of " << quiz.size() << endl;
+    return 0;
+}
